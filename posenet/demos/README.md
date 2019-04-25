@@ -1,3 +1,14 @@
+In this directory:
+```sh
+cd ..; and yarn build; and yalc push; and cd demos; and yarn watch
+```
+
+…and in a directory with all the photos:
+```sh
+http-server --cors
+```
+
+
 # PoseNet Demos
 
 ## Contents
