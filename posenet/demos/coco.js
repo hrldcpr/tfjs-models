@@ -56,6 +56,8 @@ const images = [
   'skate_park.jpg',
   'tennis_in_crowd.jpg',
   'two_on_bench.jpg',
+  'multi1-513.jpg',
+  'multi1-257x353.jpg',
 ];
 
 const {partIds, poseChain} = posenet;
@@ -86,7 +88,8 @@ function drawResults(canvas, poses, minPartConfidence, minPoseConfidence) {
 }
 
 const imageBucket =
-    'https://storage.googleapis.com/tfjs-models/assets/posenet/';
+      // 'https://storage.googleapis.com/tfjs-models/assets/posenet/';
+      'http://127.0.0.1:8080/'
 
 async function loadImage(imagePath) {
   const image = new Image();
@@ -355,6 +358,17 @@ async function testImageAndEstimatePoses(net) {
   // but by calling this method we can previous the outputs of the model and
   // visualize them.
   modelOutputs = await net.predictForMultiPose(input, guiState.outputStride);
+
+  const dump = {
+    height: input.shape[0],
+    width: input.shape[1],
+    stride: guiState.outputStride,
+  };
+  for (const k in modelOutputs) {
+    console.log(k);
+    dump[k] = await modelOutputs[k].flatten().array();
+  }
+  console.log(dump);
 
   // Process the model outputs to convert into poses
   await decodeSingleAndMultiplePoses();
